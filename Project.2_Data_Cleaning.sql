@@ -31,7 +31,7 @@ where a.PropertyAddress is null
 
 update a
 set a.PropertyAddress = ISNULL(a.PropertyAddress, b.PropertyAddress) --here instead of b.PropertyAddress we can also assign some text
-from Portfolio_Projects.dbo.NashvilleHousing a													--for ex: ISNULL(a.PropertyAddress, 'No Address')
+from Portfolio_Projects.dbo.NashvilleHousing a				--for ex: ISNULL(a.PropertyAddress, 'No Address')
 join NashvilleHousing b
 	on a.ParcelID = b.ParcelID
 	and a.[UniqueID ] != b.[UniqueID ]
@@ -120,14 +120,14 @@ set SoldAsVacant = case when SoldAsVacant = 'Y' then 'Yes'
 
 with RowNumCTE as(
 select *,
-		ROW_NUMBER() over(partition by parcelID,
-										propertyaddress,
-										saleprice,
-										saledate,
-										legalreference
-										order by
-										uniqueID
-										) row_num
+	ROW_NUMBER() over(partition by parcelID,
+					propertyaddress,
+					saleprice,
+					saledate,
+					legalreference
+					order by
+					uniqueID
+					) row_num
 from Portfolio_Projects.dbo.NashvilleHousing
 --order by parcelID
 )
